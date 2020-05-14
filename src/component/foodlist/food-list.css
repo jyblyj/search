@@ -1,0 +1,47 @@
+.Shop-main {
+  border: 1px solid black;
+  margin-top: 20px;
+}
+
+.Shop-title-tr {
+  background-color: aqua;
+}
+
+tbody td {
+  background-color: #FFE4C4;
+}
+
+.Shop-table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.Shop-table thead {
+  width: 100%;
+}
+
+.Shop-table thead tr td {
+  flex-grow: 1;
+  border: 1px solid black;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.Shop-table tbody {
+  width: 100%;
+}
+
+.Shop-table tbody tr td {
+  flex-grow: 1;
+  border: 1px solid gray;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.Shop-title-tr {
+  font-weight: bolder;
+  font-size: 20px;
+}
