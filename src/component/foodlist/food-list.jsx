@@ -26,7 +26,6 @@ class FoodList extends Component {
      * @param el:点击的某个元素
      */
     showChange = (el) => {
-        // console.log(el);
         this.setState({
             isShow: true,
             changeTxt: el
