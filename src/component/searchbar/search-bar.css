@@ -1,11 +1,4 @@
-.Shop {
-  width: 100%;
-  /* border: 1px solid gray; */
-  padding: 5px;
-  margin: 0;
-}
-
-.Shop-title {
+.shop-title {
   width: 100%;
   text-align: center;
   padding: 0;
@@ -13,14 +6,9 @@
   display: inline-block;
 }
 
-.Shop-box {
-  padding: 10px;
-
-}
-
-.Shop-header {
+.shop-header {
   width: 300px;
   margin: 0 auto;
 
-  
+
 }

@@ -1,4 +1,4 @@
-.Shop-footer {
+.shop-footer {
   width: 100%;
   margin-top: 100px;
   display: flex;
@@ -8,16 +8,16 @@
 
 }
 
-.Shop-ul {
+.shop-ul {
   display: flex;
   flex-wrap: wrap;
 }
 
-.Shop-ul li {
+.shop-ul li {
   margin: 0 2px;
 }
 
-.Shop-shadow {
+.shop-shadow {
   position: absolute;
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@
   align-items: center;
 }
 
-.Shop-change {
+.shop-change {
   width: 300px;
   height: 150px;
   border: 1px solid black;
@@ -38,7 +38,7 @@
   z-index: 9999;
 }
 
-.Shop-change h3 {
+.shop-change h3 {
   margin: 0 auto;
   color: white;
   font-family: æ¥·ä½“;
@@ -47,22 +47,7 @@
   margin-top: 10px;
 }
 
-.Shop-input {
-  text-align: center;
-  margin-top: 20px;
-  color: white;
-}
-
-.Shop-input label {
-  font-size: 20px;
-  margin-right: 10px;
-}
-
-.Shop-input input {
-  color: red;
-}
-
-.Shop-btn {
+.shop-btn {
   width: 80%;
   margin: 10px auto;
   display: flex;

@@ -67,21 +67,28 @@ class FoodList extends Component {
      */
     confirm = () => {
         // 总的食物列表数据
+        const {changeTxt} = this.state
         let arr = this.props.foodList;
         // 通过查询条件  查取的满足该条件的数据集合
         let result = this.props.searchList;
-        for (var a = 0; a < arr.length; a++) {
-            if (this.state.changeTxt.id === arr[a].id) {
-                arr[a] = this.state.changeTxt;
-                this.props.setFoodList(arr);
-            }
-        }
-        for (var i = 0; i < result.length; i++) {
-            if (this.state.changeTxt.id === result[i].id) {
-                result[i] = this.state.changeTxt;
-                this.props.setSearchFood(result);
-            }
-        }
+        arr.some((value, index) => {
+          if(value.id === changeTxt.id){
+            arr[index] = changeTxt
+            this.props.setFoodList(arr);
+            return true
+          }
+          return false
+
+        })
+
+        result.some((value,index)=>{
+          if(value.id === changeTxt.id){
+            result[index] = changeTxt;
+            this.props.setSearchFood(result);
+            return true
+          }
+          return false
+        })
         this.setState({
             isShow: false,
         })
@@ -94,10 +101,10 @@ class FoodList extends Component {
         const all = allList.slice((listCurrent - 1) * a, listCurrent * a);
         return (
             <div>
-                <main className="Shop-main">
-                    <table className="Shop-table">
+                <main className="shop-main">
+                    <table className="shop-table">
                         <thead>
-                            <tr className="Shop-title-tr">
+                            <tr className="shop-title-tr">
                                 <td>序号</td>
                                 <td>食物名称</td>
                                 <td>食物数量</td>
@@ -106,7 +113,7 @@ class FoodList extends Component {
                         </thead>
                         <tbody>
                             {all && all.map((el, index) => (
-                                <tr className="Shop-shop-item" key={index}>
+                                <tr className="shop-shop-item" key={index}>
                                     <td>{el.id}</td>
                                     <td>{el.name}</td>
                                     <td style={{ color: '#EE7600' }}>{el.count}</td>
@@ -118,14 +125,14 @@ class FoodList extends Component {
                     </table>
                 </main>
                 {/* 编辑修改的弹框 */}
-                {this.state.isShow && <div className="Shop-shadow">
-                    <div className="Shop-change">
+                {this.state.isShow && <div className="shop-shadow">
+                    <div className="shop-change">
                         <h3>商品名称:{this.state.changeTxt.name}</h3>
-                        <div className="Shop-input">
+                        <div className="shop-input">
                             <label htmlFor="num">数量</label>
                             <input type="number" id="num" value={this.state.changeTxt.count} onChange={(e) => this.changeNum(e)} />
                         </div>
-                        <div className="Shop-btn">
+                        <div className="shop-btn">
                             <Button type="primary" onClick={() => this.cancle()}>取消</Button>
                             <Button type="primary" onClick={() => this.confirm()}>确定</Button>
                         </div>

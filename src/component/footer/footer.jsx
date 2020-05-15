@@ -81,15 +81,15 @@ class Footer extends Component {
         const { listCurrent } = this.props;
         return (
             <div>
-                <footer className="Shop-footer">
-                    <ul className="Shop-ul">
-                        <li className="Shop-li-left"><Button onClick={() => { this.prePage() }} size="small"><CaretLeftOutlined /></Button></li>
+                <footer className="shop-footer">
+                    <ul className="shop-ul">
+                        <li className="shop-li-left"><Button onClick={() => { this.prePage() }} size="small"><CaretLeftOutlined /></Button></li>
                         {allPage && allPage.map((el, index) => {
-                            return <li key={index} className="Shop-li-item">
+                            return <li key={index} className="shop-li-item">
                                 <Button onClick={(e) => { this.jump(e) }} value={el} size="small" type={listCurrent === el ? `primary` : ``}>{el}</Button>
                             </li>
                         })}
-                        <li className="Shop-li-right"><Button onClick={() => { this.nextPage() }} size="small"><CaretRightOutlined /></Button></li>
+                        <li className="shop-li-right"><Button onClick={() => { this.nextPage() }} size="small"><CaretRightOutlined /></Button></li>
                     </ul>
                 </footer>
             </div>

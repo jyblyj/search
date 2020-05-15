@@ -53,8 +53,8 @@ class SearchBar extends Component {
     render() {
         return (
             <div>
-                <header className="Shop-header">
-                    <h1 className="Shop-title">食物搜索表</h1>
+                <header className="shop-header">
+                    <h1 className="shop-title">食物搜索表</h1>
                     <Search placeholder="请输入商品名称" onSearch={(value) => this.search(value)} enterButton />
                 </header>
             </div>

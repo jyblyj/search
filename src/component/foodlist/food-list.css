@@ -1,9 +1,9 @@
-.Shop-main {
+.shop-main {
   border: 1px solid black;
   margin-top: 20px;
 }
 
-.Shop-title-tr {
+.shop-title-tr {
   background-color: aqua;
 }
 
@@ -11,17 +11,17 @@ tbody td {
   background-color: #FFE4C4;
 }
 
-.Shop-table {
+.shop-table {
   border: 1px solid black;
   border-collapse: collapse;
   width: 100%;
 }
 
-.Shop-table thead {
+.shop-table thead {
   width: 100%;
 }
 
-.Shop-table thead tr td {
+.shop-table thead tr td {
   flex-grow: 1;
   border: 1px solid black;
   height: 50px;
@@ -29,11 +29,11 @@ tbody td {
   text-align: center;
 }
 
-.Shop-table tbody {
+.shop-table tbody {
   width: 100%;
 }
 
-.Shop-table tbody tr td {
+.shop-table tbody tr td {
   flex-grow: 1;
   border: 1px solid gray;
   height: 50px;
@@ -41,7 +41,22 @@ tbody td {
   text-align: center;
 }
 
-.Shop-title-tr {
+.shop-title-tr {
   font-weight: bolder;
   font-size: 20px;
+}
+
+.shop-input {
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+}
+
+.shop-input label {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.shop-input input {
+  color: red;
 }
