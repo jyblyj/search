@@ -36,7 +36,6 @@ class FoodList extends Component {
      * @author: jyb
      * @param newObj:修改后的数据，封装成一个对象，替换原来的数据
      */
-    // 获取修改数量的方法
     changeNum = (e) => {
         console.log(this.state.changeTxt)
         let newObj = {
@@ -59,7 +58,7 @@ class FoodList extends Component {
             isShow: false
         })
     }
-    // 确认修改方法
+    
     /**
      * @description:编辑弹框点击确认的方法，通过id去查找判断要修改的数据，点击确认把修改的数据重新渲染到页面上
      * @author: jyb
@@ -78,7 +77,6 @@ class FoodList extends Component {
             return true
           }
           return false
-
         })
 
         result.some((value,index)=>{
@@ -94,11 +92,12 @@ class FoodList extends Component {
         })
     }
     render() {
-        const { foodList, listCurrent, searchList } = this.props;
+        const { foodList, listCurrent, searchList,searchFood } = this.props;
+        const {changeTxt,isShow} = this.state
         // 每页列表食物数量
-        const a = 10;
-        let allList = (!this.props.searchFood) ? foodList : searchList;
-        const all = allList.slice((listCurrent - 1) * a, listCurrent * a);
+        const pageSize = 10;
+        let allList = (!searchFood) ? foodList : searchList;
+        const all = allList.slice((listCurrent - 1) * pageSize, listCurrent * pageSize);
         return (
             <div>
                 <main className="shop-main">
@@ -125,16 +124,16 @@ class FoodList extends Component {
                     </table>
                 </main>
                 {/* 编辑修改的弹框 */}
-                {this.state.isShow && <div className="shop-shadow">
+                {isShow && <div className="shop-shadow">
                     <div className="shop-change">
-                        <h3>商品名称:{this.state.changeTxt.name}</h3>
+                        <h3>商品名称:{changeTxt.name}</h3>
                         <div className="shop-input">
                             <label htmlFor="num">数量</label>
-                            <input type="number" id="num" value={this.state.changeTxt.count} onChange={(e) => this.changeNum(e)} />
+                            <input type="number" id="num" value={changeTxt.count} onChange={this.changeNum} />
                         </div>
                         <div className="shop-btn">
-                            <Button type="primary" onClick={() => this.cancle()}>取消</Button>
-                            <Button type="primary" onClick={() => this.confirm()}>确定</Button>
+                            <Button type="primary" onClick={this.cancle}>取消</Button>
+                            <Button type="primary" onClick={this.confirm}>确定</Button>
                         </div>
                     </div>
                 </div>}

@@ -22,7 +22,7 @@ class Footer extends Component {
             let arr = [];
             // 每页商品的数量
             let num = 10;
-            for (var a = 1; a <= Math.ceil(this.props.foodList.length / num); a++) {
+            for (let a = 1; a <= Math.ceil(this.props.foodList.length / num); a++) {
                 arr.push(a);
             }
             this.setState({
@@ -83,13 +83,13 @@ class Footer extends Component {
             <div>
                 <footer className="shop-footer">
                     <ul className="shop-ul">
-                        <li className="shop-li-left"><Button onClick={() => { this.prePage() }} size="small"><CaretLeftOutlined /></Button></li>
+                        <li className="shop-li-left"><Button onClick={this.prePage} size="small"><CaretLeftOutlined /></Button></li>
                         {allPage && allPage.map((el, index) => {
                             return <li key={index} className="shop-li-item">
-                                <Button onClick={(e) => { this.jump(e) }} value={el} size="small" type={listCurrent === el ? `primary` : ``}>{el}</Button>
+                                <Button onClick={(e) => this.jump(e)} value={el} size="small" type={listCurrent === el ? `primary` : ``}>{el}</Button>
                             </li>
                         })}
-                        <li className="shop-li-right"><Button onClick={() => { this.nextPage() }} size="small"><CaretRightOutlined /></Button></li>
+                        <li className="shop-li-right"><Button onClick={this.nextPage} size="small"><CaretRightOutlined /></Button></li>
                     </ul>
                 </footer>
             </div>

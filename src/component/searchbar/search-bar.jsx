@@ -48,6 +48,7 @@ class SearchBar extends Component {
                     this.info("您搜索的商品不再搜索范围")
                 }
             }
+            
         }
     }
     render() {
