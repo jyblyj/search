@@ -31,7 +31,7 @@ class Footer extends Component {
      */
     prePage = () => {
         const { page, foodList } = this.props
-        var oldIndex = Number(page);
+        let oldIndex = Number(page);
         if (oldIndex <= 1) {
             this.info("已经是第一页了")
         } else {
@@ -46,7 +46,7 @@ class Footer extends Component {
      */
     nextPage = () => {
         const { page, pageNum, foodList, setCurrentPage } = this.props
-        var oldIndex = Number(page);
+        let oldIndex = Number(page);
         if (oldIndex >= pageNum) {
             this.info("这已经是最后一页了")
         } else {
@@ -62,7 +62,7 @@ class Footer extends Component {
      */
     jump = (e) => {
         const { foodList, setCurrentPage } = this.props
-        var jumpNum = Number(e.target.value);
+        let jumpNum = Number(e.target.value);
         setCurrentPage(jumpNum, foodList);
     }
     render() {
