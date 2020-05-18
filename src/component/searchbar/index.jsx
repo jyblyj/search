@@ -29,12 +29,15 @@ class SearchBar extends Component {
      * @author: jyb
      * @param searchList:搜索结果列表集合
      */
-    componentDidUpdate() {
-        const { searchList, page,setCurrentPage } = this.props;
-        if (searchList.length === 0) {
-            this.info("你输入的商品不再搜索范围内");
-        } else {
-            setCurrentPage(page, searchList);
+    componentDidUpdate(prevProps) {
+        if (this.props.searchFood !== prevProps.searchFood) {
+            const { searchList, setCurrentPage } = this.props;
+            const page = 1;
+            if (searchList.length === 0) {
+                this.info("你输入的商品不再搜索范围内");
+            } else {
+                setCurrentPage(page, searchList);
+            }
         }
     }
     /**
@@ -43,7 +46,7 @@ class SearchBar extends Component {
      * @param value:输入的搜索条件
      */
     search = (value) => {
-        const {setSearchList} = this.props
+        const { setSearchList } = this.props
         if (value === "") {
             this.info("搜索内容不能为空");
         } else {
@@ -66,6 +69,7 @@ export default connect(
         return {
             searchList: state.allList.searchList,
             page: state.allList.page,
+            searchFood: state.allList.searchFood,
         }
     },
     {
