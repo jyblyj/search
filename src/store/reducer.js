@@ -1,61 +1,54 @@
+
 import { combineReducers } from "redux"
 /**
- * @description:食物列表的搜索状态
+ * @description:数据的初始值集合
  * @author: jyb
  * @param 
  */
-let SET_FOOD_LIST = [];
-function foodList(state = SET_FOOD_LIST, action) {
-    switch (action.type) {
-        case "SET_FOOD_LIST":
-            return action.list
-        default:
-            return state;
-    }
+let initialData = {
+    foodList: [],   //列表总数据
+    currentPage: [],   //当前页数据
+    page: 1,    //当前页码
+    pageNum: 1,     //总页数
+    pageSize: 10,    //每页数据个数
+    searchFood: "",   //搜索条件
+    searchList: [],   //搜索结果数据
 }
-/**
- * @description:点击搜索按钮  初始值为""  通过传递过来的value(输入的查询条件)查找满足的所有数据
- * @author: jyb
- * @param 
- */
-function searchFood(state = '', action) {
+function allList(state = initialData, action) {
     switch (action.type) {
-        case "SET_SEARCH_FOOD":
-            return action.value;
-        default:
-            return state;
-    }
-}
-/**
- * @description:页码的状态  初始值默认的当前页码为1  通过传递的当前页码去渲染该页的数据列表
- * @author: jyb
- * @param data:当前的页码
- */
-function listCurrent(state = 1, action) {
-    switch (action.type) {
-        case "FOOD_LIST_CURRENT":
-            return action.data;
-        default:
-            return state;
-    }
-}
-/**
- * @description:搜索后的结果  作为数组的形式传递给组件
- * @author: jyb
- * @param list:查询的结果列表
- */
-function searchList(state = [], action) {
-    switch (action.type) {
-        case "SEARCH_RESULT":
-            return action.list;
+        case "SET_FOOD_LIST": {
+            return {
+                ...state,
+                foodList: action.list,
+                pageNum: action.num,
+                currentPage: action.data,
+            }
+        }
+        case "SET_CURRENT_PAGE": {
+            return {
+                ...state,
+                currentPage: action.list,
+                page: action.page
+            }
+        }
+        case "SET_CHANGE_DATA": {
+            return {
+                ...state,
+                currentPage: action.arr
+            }
+        }
+        case "SET_SEARCH_LIST": {
+            return {
+                ...state,
+                searchFood: action.searchValue,
+                searchList: action.searchArr
+            }
+        }
         default:
             return state;
     }
 }
 let reducer = combineReducers({
-    foodList,
-    searchFood,
-    listCurrent,
-    searchList
+    allList,
 })
 export default reducer

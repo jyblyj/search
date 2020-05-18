@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import { connect } from "react-redux"
-import FoodList from "./component/foodlist/food-list.jsx"
-import SearchBar from "./component/searchbar/search-bar.jsx"
-import Footer from "./component/footer/footer.jsx"
+import FoodList from "./component/foodlist/index.jsx"
+import SearchBar from "./component/searchbar/index.jsx"
+import Footer from "./component/footer/index.jsx"
 /**
-     * @description:页面的父组件
-     * @author: jyb
-     * @param
-     */
+ * @description:页面的父组件
+ * @author: jyb
+ * @param
+ */
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +29,6 @@ class App extends React.Component {
         )
     }
 }
-
 export default connect(state => {
     return {
 

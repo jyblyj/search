@@ -16,50 +16,83 @@ function setFoodList(list) {
  * @param 
  */
 function queryShopList() {
-    return dispatch => {
-        let p = axios.get("/shoplist/shop-list.json")
-        p.then(res => {
-            dispatch(setFoodList(res.data.list))
+    return (dispatch, getState) => {
+        let all = axios.get("/shoplist/shop-list.json")
+        all.then(res => {
+            const pageSize = getState().allList.pageSize;
+            const page = getState().allList.page;
+            dispatch({
+                type: 'SET_FOOD_LIST',
+                list: res.data.list,
+                num: Math.ceil(res.data.list.length / pageSize),
+                data: res.data.list.slice((page - 1) * pageSize, page * pageSize),
+            })
         })
     }
 }
 /**
- * @description:当前的页码数 
+ * @description:获取当前页的数据信息状态
  * @author: jyb
- * @param:data:作为参数把获取的当前的页码传递给对应的reducer
+ * @param page：当前页数；list:当前页的数据列表
  */
-function foodListCurrent(data) {
-    return {
-        type: "FOOD_LIST_CURRENT",
-        data,
+
+function setCurrentPage(page, list) {
+    return (dispatch, getState) => {
+        const pageSize = getState().allList.pageSize;
+        dispatch({
+            type: "SET_CURRENT_PAGE",
+            page,
+            list: list.slice((page - 1) * pageSize, page * pageSize),
+        })
     }
 }
 /**
- * @description:获取输入框里输入的查询条件
+ * @description:编辑修改   把修改后的传递过来  去替换当前页中的某一条数据
  * @author: jyb
- * @param:value:查询的条件
+ * @param changeTxt:修改的数据;arr:当前页的数据
  */
-function setSearchFood(value) {
-    return {
-        type: "SET_SEARCH_FOOD",
-        value
+function setChangeData(changeTxt) {
+    return (dispatch, getState) => {
+        const arr = getState().allList.currentPage;
+        arr.some((value, index) => {
+            if (value.id === changeTxt.id) {
+                arr[index] = changeTxt
+                return true
+            }
+            return false
+        })
+        dispatch({
+            type: "SET_CHANGE_DATA",
+            arr
+        })
     }
 }
 /**
- * @description:点击搜索获取的搜索数据
+ * @description:食物搜索
  * @author: jyb
- * @param:list:搜索之后的数据列表集合
+ * @param searchValue:搜索的条件
  */
-function searchResult(list) {
-    return {
-        type: "SEARCH_RESULT",
-        list
+function setSearchList(searchValue) {
+    return (dispatch, getState) => {
+        const searchArr = []
+        const foodList = getState().allList.foodList;
+        foodList.forEach((value, index) => {
+            if (value.name === searchValue) {
+                searchArr.push(foodList[index])
+            }
+        })
+        dispatch({
+            type: "SET_SEARCH_LIST",
+            searchValue,
+            searchArr
+        })
     }
 }
 export {
     queryShopList,
-    setSearchFood,
     setFoodList,
-    foodListCurrent,
-    searchResult
+    setCurrentPage,
+    setChangeData,
+    setSearchList
+
 }

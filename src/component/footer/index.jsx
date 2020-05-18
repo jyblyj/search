@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import "./footer.css"
+import "./index.css"
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
-import { queryShopList, setFoodList, foodListCurrent } from "../../store/action.js"
+import { queryShopList, setFoodList, setCurrentPage } from "../../store/action.js"
 /**
  * @description:分页组件，按照每页十个数据进行分布，渲染
  * @author: jyb
@@ -13,22 +13,8 @@ class Footer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // 总页数
-            allPage: 0,
+
         }
-    }
-    componentDidMount() {
-        setTimeout(() => {
-            let arr = [];
-            // 每页商品的数量
-            let num = 10;
-            for (let a = 1; a <= Math.ceil(this.props.foodList.length / num); a++) {
-                arr.push(a);
-            }
-            this.setState({
-                allPage: arr,
-            })
-        }, 10);
     }
     /**
      * @description:提示信息方法
@@ -44,12 +30,13 @@ class Footer extends Component {
      * @param:oldIndex当前页码，
      */
     prePage = () => {
-        var oldIndex = Number(this.props.listCurrent);
+        const { page, foodList } = this.props
+        var oldIndex = Number(page);
         if (oldIndex <= 1) {
             this.info("已经是第一页了")
         } else {
             oldIndex -= 1;
-            this.props.foodListCurrent(oldIndex);
+            this.props.setCurrentPage(oldIndex, foodList);
         }
     }
     /**
@@ -58,13 +45,14 @@ class Footer extends Component {
      * @param:oldIndex当前页码，
      */
     nextPage = () => {
-        var oldIndex = Number(this.props.listCurrent);
-        if (oldIndex >= this.state.allPage.length) {
+        const { page, pageNum, foodList, setCurrentPage } = this.props
+        var oldIndex = Number(page);
+        if (oldIndex >= pageNum) {
             this.info("这已经是最后一页了")
         } else {
             oldIndex += 1;
             console.log(oldIndex);
-            this.props.foodListCurrent(oldIndex)
+            setCurrentPage(oldIndex, foodList)
         }
     }
     /**
@@ -73,20 +61,25 @@ class Footer extends Component {
      * @param:jumpNum要跳转的页码
      */
     jump = (e) => {
+        const { foodList, setCurrentPage } = this.props
         var jumpNum = Number(e.target.value);
-        this.props.foodListCurrent(jumpNum);
+        setCurrentPage(jumpNum, foodList);
     }
     render() {
-        const { allPage } = this.state;
-        const { listCurrent } = this.props;
+        const { pageNum, page } = this.props;
+        let pageArr = [];
+        // 将总页数转化为数组
+        for (let i = 1; i <= pageNum; i++) {
+            pageArr.push(i)
+        }
         return (
             <div>
                 <footer className="shop-footer">
                     <ul className="shop-ul">
                         <li className="shop-li-left"><Button onClick={this.prePage} size="small"><CaretLeftOutlined /></Button></li>
-                        {allPage && allPage.map((el, index) => {
+                        {pageArr && pageArr.map((el, index) => {
                             return <li key={index} className="shop-li-item">
-                                <Button onClick={(e) => this.jump(e)} value={el} size="small" type={listCurrent === el ? `primary` : ``}>{el}</Button>
+                                <Button onClick={(e) => this.jump(e)} value={el} size="small" type={page === el ? `primary` : ``}>{el}</Button>
                             </li>
                         })}
                         <li className="shop-li-right"><Button onClick={this.nextPage} size="small"><CaretRightOutlined /></Button></li>
@@ -99,13 +92,14 @@ class Footer extends Component {
 export default connect(
     state => {
         return {
-            foodList: state.foodList,
-            listCurrent: state.listCurrent
+            pageNum: state.allList.pageNum,
+            page: state.allList.page,
+            foodList: state.allList.foodList,
         }
     },
     {
         queryShopList,
         setFoodList,
-        foodListCurrent
+        setCurrentPage
     }
 )(Footer)

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import "./search-bar.css"
+import "./index.css"
 import { connect } from "react-redux"
-import { setSearchFood, setFoodList, searchResult } from "../../store/action.js"
+import { setFoodList, setSearchList, setCurrentPage } from "../../store/action.js"
 import { Input, message } from 'antd';
 const { Search } = Input;
 /**
@@ -25,30 +25,29 @@ class SearchBar extends Component {
         message.info(msg);
     };
     /**
+     * @description:将搜索后的数据作为参数，调用当前页的方法  把搜索结果渲染到页面上
+     * @author: jyb
+     * @param searchList:搜索结果列表集合
+     */
+    componentDidUpdate() {
+        const { searchList, page,setCurrentPage } = this.props;
+        if (searchList.length === 0) {
+            this.info("你输入的商品不再搜索范围内");
+        } else {
+            setCurrentPage(page, searchList);
+        }
+    }
+    /**
      * @description:点击搜索的方法  根据搜索条件在数据库中查找满足条件的
      * @author: jyb
      * @param value:输入的搜索条件
      */
     search = (value) => {
-        this.props.setSearchFood(value)
-        const { foodList } = this.props
+        const {setSearchList} = this.props
         if (value === "") {
-            this.info("搜索内容不能为空")
+            this.info("搜索内容不能为空");
         } else {
-            var is = false;
-            var newArr = []
-            for (var i = 0; i < foodList.length; i++) {
-                if (foodList[i].name === value) {
-                    newArr.push(foodList[i]);
-                    is = true
-                }
-                if (is === true) {
-                    this.props.searchResult(newArr)
-                } else {
-                    this.info("您搜索的商品不再搜索范围")
-                }
-            }
-            
+            setSearchList(value);
         }
     }
     render() {
@@ -65,14 +64,13 @@ class SearchBar extends Component {
 export default connect(
     state => {
         return {
-            searchFood: state.searchFood,
-            foodList: state.foodList,
-            searchList: state.searchList
+            searchList: state.allList.searchList,
+            page: state.allList.page,
         }
     },
     {
-        setSearchFood,
         setFoodList,
-        searchResult
+        setSearchList,
+        setCurrentPage
     }
 )(SearchBar)

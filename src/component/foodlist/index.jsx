@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import "./food-list.css"
+import "./index.css"
 import { EditOutlined } from '@ant-design/icons';
 import { connect } from "react-redux"
-import { queryShopList, setFoodList, searchResult, setSearchFood } from "../../store/action.js"
+import { queryShopList, setFoodList, setCurrentPage, setChangeData } from "../../store/action.js"
 import { Button } from 'antd';
 /**
  * @description:食物列表组件，渲染食物详细信息到页面
@@ -37,17 +37,16 @@ class FoodList extends Component {
      * @param newObj:修改后的数据，封装成一个对象，替换原来的数据
      */
     changeNum = (e) => {
-        console.log(this.state.changeTxt)
+        const { changeTxt } = this.state
         let newObj = {
-            name: this.state.changeTxt.name,
+            name: changeTxt.name,
             count: e.target.value,
-            id: this.state.changeTxt.id
+            id: hangeTxt.id
         }
         this.setState({
             changeTxt: newObj
         })
     }
-
     /**
      * @description:编辑弹框点击取消的方法
      * @author: jyb
@@ -58,7 +57,6 @@ class FoodList extends Component {
             isShow: false
         })
     }
-    
     /**
      * @description:编辑弹框点击确认的方法，通过id去查找判断要修改的数据，点击确认把修改的数据重新渲染到页面上
      * @author: jyb
@@ -66,52 +64,31 @@ class FoodList extends Component {
      */
     confirm = () => {
         // 总的食物列表数据
-        const {changeTxt} = this.state
-        let arr = this.props.foodList;
-        // 通过查询条件  查取的满足该条件的数据集合
-        let result = this.props.searchList;
-        arr.some((value, index) => {
-          if(value.id === changeTxt.id){
-            arr[index] = changeTxt
-            this.props.setFoodList(arr);
-            return true
-          }
-          return false
-        })
-
-        result.some((value,index)=>{
-          if(value.id === changeTxt.id){
-            result[index] = changeTxt;
-            this.props.setSearchFood(result);
-            return true
-          }
-          return false
-        })
+        const { changeTxt } = this.state
+        const { setChangeData } = this.props
+        setChangeData(changeTxt)
         this.setState({
             isShow: false,
         })
     }
     render() {
-        const { foodList, listCurrent, searchList,searchFood } = this.props;
-        const {changeTxt,isShow} = this.state
-        // 每页列表食物数量
-        const pageSize = 10;
-        let allList = (!searchFood) ? foodList : searchList;
-        const all = allList.slice((listCurrent - 1) * pageSize, listCurrent * pageSize);
+        const { currentPage } = this.props;
+        const { changeTxt, isShow } = this.state;
         return (
             <div>
                 <main className="shop-main">
                     <table className="shop-table">
-                        <thead>
+                        {currentPage && <thead>
                             <tr className="shop-title-tr">
                                 <td>序号</td>
                                 <td>食物名称</td>
                                 <td>食物数量</td>
                                 <td>编辑</td>
                             </tr>
-                        </thead>
+                        </thead>}
                         <tbody>
-                            {all && all.map((el, index) => (
+                            {currentPage && currentPage.map((el, index) => (
+
                                 <tr className="shop-shop-item" key={index}>
                                     <td>{el.id}</td>
                                     <td>{el.name}</td>
@@ -142,18 +119,14 @@ class FoodList extends Component {
     }
 }
 export default connect(
-    state => {
-        return {
-            foodList: state.foodList,
-            listCurrent: state.listCurrent,
-            searchList: state.searchList,
-            searchFood: state.searchFood,
-        }
-    },
+    (state) => ({
+        foodList: state.allList.foodList,
+        currentPage: state.allList.currentPage,
+    }),
     {
         queryShopList,
         setFoodList,
-        searchResult,
-        setSearchFood
+        setCurrentPage,
+        setChangeData
     }
 )(FoodList)
