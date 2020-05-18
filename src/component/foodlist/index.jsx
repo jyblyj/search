@@ -41,7 +41,7 @@ class FoodList extends Component {
         let newObj = {
             name: changeTxt.name,
             count: e.target.value,
-            id: hangeTxt.id
+            id: changeTxt.id
         }
         this.setState({
             changeTxt: newObj
