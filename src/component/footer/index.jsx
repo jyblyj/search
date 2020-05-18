@@ -51,7 +51,6 @@ class Footer extends Component {
             this.info("这已经是最后一页了")
         } else {
             oldIndex += 1;
-            console.log(oldIndex);
             setCurrentPage(oldIndex, foodList)
         }
     }
